@@ -11,7 +11,7 @@ param(
 
 # --- Configuration ---
 $RepoOwner = "amrohan"
-$RepoName = "termix"
+$RepoName = "t"
 $ExeName = "termix.exe"
 $InstallDir = "$env:LOCALAPPDATA\Programs\termix"
 # ---------------------

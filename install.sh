@@ -6,7 +6,7 @@
 #   Uninstall:      curl -fsSL https://raw.githubusercontent.com/amrohan/t/main/install.sh | bash -s uninstall
 
 # --- Configuration ---
-REPO="amrohan/termix"
+REPO="amrohan/t"
 INSTALL_DIR="$HOME/.local/bin"
 EXE_NAME="termix"
 # ---------------------
