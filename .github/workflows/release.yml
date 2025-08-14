@@ -14,15 +14,12 @@ jobs:
           - os: windows-latest
             rid: win-x64
             asset_name_suffix: win-x64.zip
-
           - os: ubuntu-latest
             rid: linux-x64
             asset_name_suffix: linux-x64.tar.gz
-
           - os: macos-latest
             rid: osx-x64
             asset_name_suffix: osx-x64.zip
-
           - os: macos-latest
             rid: osx-arm64
             asset_name_suffix: osx-arm64.zip
@@ -32,6 +29,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Free up disk space on runner
+        if: runner.os == 'Windows'
+        run: |
+          echo "Removing large directories to free up disk space..."
+          Remove-Item -Path 'C:\Program Files\dotnet\sdk' -Recurse -Force -ErrorAction SilentlyContinue
+          Remove-Item -Path 'C:\Program Files (x86)\Android' -Recurse -Force -ErrorAction SilentlyContinue
+          Remove-Item -Path 'C:\hostedtoolcache\windows\Java_*' -Recurse -Force -ErrorAction SilentlyContinue
+          echo "Disk space cleanup complete."
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
