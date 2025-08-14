@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "termix", "termix.csproj", "{301F3DAD-2900-4610-6560-3B288055BEF5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{301F3DAD-2900-4610-6560-3B288055BEF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{301F3DAD-2900-4610-6560-3B288055BEF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{301F3DAD-2900-4610-6560-3B288055BEF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{301F3DAD-2900-4610-6560-3B288055BEF5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2503FFF3-7219-4468-ABE1-3F36055FB595}
+	EndGlobalSection
+EndGlobal

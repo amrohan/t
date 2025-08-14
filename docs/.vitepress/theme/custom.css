@@ -1,0 +1,14 @@
+/* Custom styles for Termix documentation */
+
+/* Ensure custom components work well with VitePress theme */
+.VPContent .Contributors {
+  margin: 2rem 0;
+}
+
+/* Additional styling for better integration */
+.custom-block.tip,
+.custom-block.info,
+.custom-block.warning,
+.custom-block.danger {
+  margin: 1rem 0;
+}
