@@ -54,4 +54,4 @@ jobs:
         with:
           files: termix-${{ matrix.asset_name_suffix }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACCESS_GITHUB_TOKEN }}
