@@ -41,17 +41,23 @@ jobs:
       - name: Publish Application
         run: dotnet publish --configuration Release -r ${{ matrix.rid }} --self-contained true /p:PublishSingleFile=true -o ./publish
 
-      - name: Package for Windows
+      - name: Package for Windows (zip)
         if: runner.os == 'Windows'
         run: Compress-Archive -Path ./publish/* -DestinationPath termix-${{ matrix.asset_name_suffix }}
 
-      - name: Package for Linux/macOS
-        if: runner.os != 'Windows'
+      - name: Package for Linux (tar.gz)
+        if: runner.os == 'Linux'
         run: tar -czvf termix-${{ matrix.asset_name_suffix }} -C ./publish .
+
+      - name: Package for macOS (zip)
+        if: runner.os == 'macOS'
+        run: |
+          cd publish
+          zip -r ../termix-${{ matrix.asset_name_suffix }} .
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v2
         with:
           files: termix-${{ matrix.asset_name_suffix }}
         env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
