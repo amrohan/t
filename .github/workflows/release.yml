@@ -30,15 +30,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@v10
-        with:
-          root-reserve-mb: 512
-          swap-size-mb: 1024
-          remove-dotnet: "true"
-          remove-android: "true"
-          remove-haskell: "true"
-
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
@@ -47,7 +38,6 @@ jobs:
       - name: Publish Application
         run: dotnet publish --configuration Release -r ${{ matrix.rid }} --self-contained true /p:PublishSingleFile=true -o ./publish
 
-      # Correct packaging steps for each OS
       - name: Package for Windows (zip)
         if: runner.os == 'Windows'
         run: Compress-Archive -Path ./publish/* -DestinationPath termix-${{ matrix.asset_name_suffix }}
