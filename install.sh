@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# A professional-grade installer for Termix.
+# A professional-grade installer for Termix, inspired by the Bun installer.
 #
 # Usage:
 #   Install/Update: curl -fsSL https://raw.githubusercontent.com/amrohan/t/main/install.sh | bash
@@ -57,7 +57,7 @@ install_termix() {
 	platform=$(uname -ms)
 	case "$platform" in
 	'Darwin x86_64') local target=osx-x64 ;;
-	'Darwin arm64') local target=osx-arm64 ;; # <-- THE FIX IS HERE
+	'Darwin arm64') local target=osx-arm64 ;;
 	'Linux aarch64' | 'Linux arm64') local target=linux-aarch64 ;;
 	'Linux x86_64') local target=linux-x64 ;;
 	*) error "Unsupported platform: $platform. Please open an issue at https://github.com/$REPO/issues" ;;
@@ -70,8 +70,7 @@ install_termix() {
 
 	local tag="${1:-latest}"
 	local api_url="https://api.github.com/repos/$REPO/releases"
-	local release_url="$api_url/$tag"
-	if [[ $tag = "latest" ]]; then release_url="$api_url/latest"; else release_url="$api_url/tags/$tag"; fi
+	if [[ $tag = "latest" ]]; then local release_url="$api_url/latest"; else local release_url="$api_url/tags/$tag"; fi
 
 	if [[ $target == "linux"* ]]; then local asset_suffix="$target.tar.gz"; else local asset_suffix="$target.zip"; fi
 
@@ -93,7 +92,19 @@ install_termix() {
 	info "Extracting archive..."
 	if [[ $asset_suffix == *.zip ]]; then unzip -oqd "$temp_dir" "$archive_path"; else tar -xzf "$archive_path" -C "$temp_dir"; fi
 
-	mv "$temp_dir/publish/$EXE_NAME" "$exe_path" || error 'Failed to move executable.'
+	# --- ### THE FIX IS HERE ### ---
+	# Instead of assuming a 'publish' directory, we find the executable in the temp folder.
+	# This is robust and handles any top-level directory structure in the archive.
+	local found_exe_path
+	found_exe_path=$(find "$temp_dir" -type f -name "$EXE_NAME" | head -n 1)
+
+	if [ -z "$found_exe_path" ]; then
+		error "Could not find the '$EXE_NAME' executable in the downloaded archive."
+	fi
+
+	mv "$found_exe_path" "$exe_path" || error 'Failed to move executable to destination.'
+	# --- ### END OF FIX ### ---
+
 	chmod +x "$exe_path" || error 'Failed to set permissions.'
 
 	if [[ $target == "osx"* ]]; then xattr -d com.apple.quarantine "$exe_path" 2>/dev/null || true; fi
